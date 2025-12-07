@@ -1,0 +1,33 @@
+# environment
+dog_env/
+venv/
+.env
+
+# python cache
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# editor settings
+.vscode/
+.idea/
+
+# OS junk
+.DS_Store
+
+# archives
+*.zip
+*.tar
+*.tar.gz
+
+models/*.pth
+models/*.pt
+
+# logs
+*.log
+
+# local test files
+*.jpg
+*.png
+*.jpeg
