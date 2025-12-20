@@ -1,3 +1,4 @@
+# backend/main.py
 from dotenv import load_dotenv
 import os
 from pathlib import Path
@@ -12,10 +13,25 @@ print("MODEL PATH FROM ENV AFTER LOADING:", os.getenv("MODEL_PATH"))
 
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from backend.routers import data, predict, chat
-from backend.routers import data_api
+from backend.routers import data_api, predict, chat
+from backend.routes.users import router as users_router
+from backend.routes.orders import router as orders_router
+from backend.routes.chat_history import router as chat_history_router
+from backend.routes.chat_sessions import router as chat_sessions_router  # ← NEW
+from backend.utils.mongo import ensure_indexes
 
+# from backend.routers import data
 app = FastAPI(title="DogBreedChat Backend")
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=[
+        "http://localhost:5173",  # Vite frontend
+    ],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 # Allow your frontend origin (set properly in production)
 app.add_middleware(
@@ -26,11 +42,19 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-app.include_router(data.router, prefix="/api/data", tags=["data"])
+# app.include_router(data.router, prefix="/api/data", tags=["data"])
 app.include_router(predict.router, prefix="/api/predict", tags=["predict"])
 app.include_router(chat.router, prefix="/api/chat", tags=["chat"])
 app.include_router(data_api.router, prefix="/api/data", tags=["data"])
+app.include_router(users_router)
+app.include_router(orders_router)
+app.include_router(chat_history_router)
+app.include_router(chat_sessions_router)  # ← NEW
 
 @app.get("/")
 def root():
     return {"status": "ok", "message": "DogBreedChat backend running"}
+
+@app.on_event("startup")
+async def startup_event():
+    await ensure_indexes()

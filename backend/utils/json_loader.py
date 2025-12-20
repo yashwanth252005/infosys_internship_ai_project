@@ -1,3 +1,4 @@
+# backend/utils/json_loader.py
 import json
 
 class JSONStore:
@@ -84,3 +85,26 @@ class JSONStore:
     def get_diet_plan(self, breed_name: str):
         key = self._normalize(breed_name)
         return self.diets.get(key)
+    
+  # ------------------------------------
+    # Helper: get diet info for specific life stage
+    # Example: puppy, adult, senior
+    # ------------------------------------
+    def get_diet_info(self, breed_name: str, life_stage: str):
+        breed_key = self._normalize(breed_name)
+        stage_key = self._normalize(life_stage)
+
+        # Breed must exist
+        if breed_key not in self.diets:
+            return None
+
+        breed_diet = self.diets[breed_key]
+
+        # If diet JSON is structured by life stage
+        if isinstance(breed_diet, dict):
+            # Check stage exists
+            if stage_key in breed_diet:
+                return breed_diet[stage_key]
+
+        # If no matching life stage found
+        return None

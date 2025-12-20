@@ -12,6 +12,20 @@ CLASS_IDX = os.getenv("CLASS_INDICES_PATH", "../json_files/class_indices.json")
 
 store = JSONStore(BREEDS_JSON, DIETS_JSON, SAMPLE_Q, CLASS_IDX)
 
+@router.get("/sample-questions")
+def get_sample_questions():
+    return {"questions": store.sample_questions}
+
+@router.get("/all-breeds")
+def get_all_breeds():
+    return {"breeds": list(store.breeds.keys())}
+
+@router.get("/diet/{breed_name}/{life_stage}")
+def get_diet_info(breed_name: str, life_stage: str):
+    info = store.get_diet_info(breed_name, life_stage)
+    if not info:
+        raise HTTPException(status_code=404, detail="Diet info not found")
+    return info
 
 # -------------------------
 # GET BREED INFO
