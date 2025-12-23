@@ -42,23 +42,118 @@ export default function Breed() {
         }
     };
 
-    const InfoCard = ({ title, value, delay = 0 }) => (
-        <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.3, delay }}
-            whileHover={{ y: -4 }}
-            className="bg-gradient-to-br from-white/90 to-gray-50/80 backdrop-blur-sm rounded-2xl shadow-lg p-5 hover:shadow-xl transition border border-white/50"
-        >
-            <h3 className="text-xs font-semibold text-gray-500 uppercase tracking-wide">{title}</h3>
-            <p className="mt-2 text-gray-800 font-semibold text-base">{value}</p>
-        </motion.div>
-    );
+    // Category-based styling with icons and colors
+    const getCardStyle = (title) => {
+        const categories = {
+            physical: {
+                fields: ["Height", "Weight", "Colors", "Coat Type", "Shedding Level"],
+                gradient: "from-emerald-500 via-green-500 to-teal-500",
+                bg: "from-emerald-50/80 to-green-50/60",
+                icon: "📏",
+                iconBg: "bg-emerald-100",
+                textColor: "text-emerald-700"
+            },
+            behavior: {
+                fields: ["Temperament", "Intelligence", "Training Difficulty", "Barking Level"],
+                gradient: "from-blue-500 via-indigo-500 to-purple-500",
+                bg: "from-blue-50/80 to-indigo-50/60",
+                icon: "🧠",
+                iconBg: "bg-blue-100",
+                textColor: "text-blue-700"
+            },
+            care: {
+                fields: ["Exercise Needs", "Grooming Needs"],
+                gradient: "from-purple-500 via-violet-500 to-fuchsia-500",
+                bg: "from-purple-50/80 to-violet-50/60",
+                icon: "💜",
+                iconBg: "bg-purple-100",
+                textColor: "text-purple-700"
+            },
+            origin: {
+                fields: ["Breed Group", "Origin"],
+                gradient: "from-amber-500 via-orange-500 to-yellow-500",
+                bg: "from-amber-50/80 to-orange-50/60",
+                icon: "🌍",
+                iconBg: "bg-amber-100",
+                textColor: "text-amber-700"
+            },
+            health: {
+                fields: ["Common Diseases"],
+                gradient: "from-rose-500 via-pink-500 to-red-500",
+                bg: "from-rose-50/80 to-pink-50/60",
+                icon: "⚕️",
+                iconBg: "bg-rose-100",
+                textColor: "text-rose-700"
+            }
+        };
+
+        for (const [key, config] of Object.entries(categories)) {
+            if (config.fields.includes(title)) return config;
+        }
+        return categories.physical; // default
+    };
+
+    const InfoCard = ({ title, value, delay = 0 }) => {
+        const style = getCardStyle(title);
+
+        return (
+            <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.3, delay }}
+                whileHover={{
+                    y: -8,
+                    scale: 1.02,
+                    boxShadow: "0 20px 40px rgba(0,0,0,0.15)"
+                }}
+                className="group relative"
+            >
+                {/* Gradient border with glow effect */}
+                <div className={`absolute inset-0 bg-gradient-to-r ${style.gradient} rounded-2xl opacity-0 group-hover:opacity-100 blur-xl transition-opacity duration-300`} />
+                <div className={`absolute inset-0 bg-gradient-to-r ${style.gradient} rounded-2xl p-[2px] opacity-60 group-hover:opacity-100 transition-opacity duration-300`}>
+                    <div className={`h-full w-full bg-gradient-to-br ${style.bg} backdrop-blur-sm rounded-2xl`} />
+                </div>
+
+                {/* Card content */}
+                <div className="relative p-5 flex items-start gap-3">
+                    {/* Icon with reveal animation */}
+                    <motion.div
+                        className={`${style.iconBg} rounded-xl p-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300`}
+                        initial={{ scale: 0, rotate: -180 }}
+                        whileInView={{ scale: 1, rotate: 0 }}
+                        transition={{ delay: delay + 0.2, type: "spring" }}
+                    >
+                        <span className="text-2xl">{style.icon}</span>
+                    </motion.div>
+
+                    <div className="flex-1">
+                        <h3 className={`text-xs font-bold ${style.textColor} uppercase tracking-wider mb-2`}>
+                            {title}
+                        </h3>
+                        <p className="text-gray-800 font-semibold text-base leading-snug">
+                            {value}
+                        </p>
+                    </div>
+                </div>
+            </motion.div>
+        );
+    };
 
     return (
         <div className="relative overflow-hidden">
             {/* Gradient Background */}
             <div className="absolute inset-0 bg-gradient-to-br from-indigo-50 via-purple-50 to-pink-50 -z-10" />
+
+            {/* Animated Background Blobs */}
+            <motion.div
+                animate={{
+                    scale: [1, 1.2, 1],
+                    x: [0, 50, 0],
+                    opacity: [0.3, 0.5, 0.3]
+                }}
+                transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
+                className="absolute top-20 right-20 w-96 h-96 bg-gradient-to-br from-purple-300/40 to-pink-300/40 rounded-full blur-3xl -z-5"
+            />
 
             <div className="max-w-6xl mx-auto px-4 py-10">
                 {/* Header */}
@@ -66,9 +161,13 @@ export default function Breed() {
                     initial={{ opacity: 0, y: -20 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.5 }}
-                    className="mb-8"
+                    className="mb-8 text-center"
                 >
-                    <h1 className="text-4xl font-extrabold mb-2">🐕 Breed Information</h1>
+                    <h1 className="text-4xl font-extrabold mb-2">🐕
+                        <span className="bg-gradient-to-r from-primary via-purple-600 to-pink-600 bg-clip-text text-transparent">
+                            Breed Information
+                        </span>
+                    </h1>
                     <p className="text-gray-600">Discover detailed information about any dog breed</p>
                 </motion.div>
 
@@ -91,13 +190,19 @@ export default function Breed() {
                         />
                     </label>
 
+
                     <motion.button
+                        whileHover={{ scale: 1.05 }}
+                        whileTap={{ scale: 0.95 }}
                         onClick={() => fetchBreedInfo(breedName)}
-                        whileHover={{ scale: 1.02 }}
-                        whileTap={{ scale: 0.98 }}
-                        className="px-8 py-3 bg-gradient-to-r from-primary to-indigo-700 text-white font-semibold rounded-xl shadow-lg hover:shadow-xl transition"
+                        className="px-8 py-4 bg-gradient-to-r from-primary to-purple-600 text-white rounded-2xl font-semibold shadow-lg hover:shadow-xl transition relative overflow-hidden group"
                     >
-                        🔍 Get Breed Info
+                        <span className="relative z-10">🔍 Get Breed Info</span>
+                        <motion.div
+                            animate={{ x: ["-100%", "200%"] }}
+                            transition={{ duration: 2, repeat: Infinity, ease: "linear" }}
+                            className="absolute inset-0 w-1/2 h-full bg-gradient-to-r from-transparent via-white/30 to-transparent skew-x-12"
+                        />
                     </motion.button>
 
                     {/* Loading */}

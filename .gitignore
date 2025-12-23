@@ -29,5 +29,5 @@ models/*.pt
 
 # local test files
 *.jpg
-*.png
+
 *.jpeg

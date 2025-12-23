@@ -1,6 +1,7 @@
 // frontend/src/pages/Home.jsx
 import { motion } from "framer-motion";
 import { useNavigate } from "react-router-dom";
+import hero_image from "../assets/hero_image.png";
 
 export default function Home() {
     const navigate = useNavigate();
@@ -172,7 +173,8 @@ export default function Home() {
                             <motion.img
                                 whileHover={{ scale: 1.05, rotate: 2 }}
                                 transition={{ type: "spring", stiffness: 300 }}
-                                src="/hero_image.png"
+                                src={hero_image}
+                                // src="/hero_image.png"
                                 alt="Dog Illustration"
                                 width={500}
                                 height={500}

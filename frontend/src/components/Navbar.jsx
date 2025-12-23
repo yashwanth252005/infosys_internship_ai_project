@@ -7,6 +7,13 @@ import { useState } from "react";
 export default function Navbar() {
     const { user, signOut } = useAuth();
     const [mobileOpen, setMobileOpen] = useState(false);
+    const [showLogoutModal, setShowLogoutModal] = useState(false);
+
+    const handleLogout = () => {
+        signOut();
+        setShowLogoutModal(false);
+        setMobileOpen(false);
+    };
 
     const baseLink =
         "px-3 py-2 rounded-xl text-sm font-medium transition";
@@ -104,7 +111,7 @@ export default function Navbar() {
                                 </div>
 
                                 <button
-                                    onClick={signOut}
+                                    onClick={() => setShowLogoutModal(true)}
                                     className="text-sm text-white/90 hover:text-white hover:underline"
                                 >
                                     Logout
@@ -175,16 +182,72 @@ export default function Navbar() {
                             </>
                         ) : (
                             <button
-                                onClick={() => {
-                                    signOut();
-                                    setMobileOpen(false);
-                                }}
+                                onClick={() => setShowLogoutModal(true)}
                                 className="text-left text-red-200 hover:text-red-100"
                             >
                                 Logout
                             </button>
                         )}
                     </div>
+                </motion.div>
+            )}
+
+            {/* Logout Confirmation Modal */}
+            {showLogoutModal && (
+                <motion.div
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    exit={{ opacity: 0 }}
+                    className="fixed inset-0 z-[100] flex items-center justify-center bg-black/50 backdrop-blur-sm px-4"
+                    onClick={() => setShowLogoutModal(false)}
+                >
+                    <motion.div
+                        initial={{ scale: 0.9, y: 20 }}
+                        animate={{ scale: 1, y: 0 }}
+                        exit={{ scale: 0.9, y: 20 }}
+                        onClick={(e) => e.stopPropagation()}
+                        className="bg-white rounded-3xl shadow-2xl p-8 max-w-md w-full border border-gray-100"
+                    >
+                        {/* Icon */}
+                        <motion.div
+                            initial={{ scale: 0 }}
+                            animate={{ scale: 1 }}
+                            transition={{ delay: 0.1, type: "spring", bounce: 0.5 }}
+                            className="w-16 h-16 mx-auto mb-4 bg-gradient-to-br from-red-100 to-pink-100 rounded-full flex items-center justify-center"
+                        >
+                            <span className="text-3xl">👋</span>
+                        </motion.div>
+
+                        {/* Title */}
+                        <h2 className="text-2xl font-bold text-center mb-3 text-gray-800">
+                            Logout Confirmation
+                        </h2>
+
+                        {/* Message */}
+                        <p className="text-center text-gray-600 mb-8">
+                            Are you sure you want to logout? You'll need to sign in again to access your account.
+                        </p>
+
+                        {/* Buttons */}
+                        <div className="flex gap-3">
+                            <motion.button
+                                whileHover={{ scale: 1.02 }}
+                                whileTap={{ scale: 0.98 }}
+                                onClick={() => setShowLogoutModal(false)}
+                                className="flex-1 px-6 py-3 rounded-xl bg-gray-100 hover:bg-gray-200 text-gray-700 font-semibold transition"
+                            >
+                                Cancel
+                            </motion.button>
+                            <motion.button
+                                whileHover={{ scale: 1.02 }}
+                                whileTap={{ scale: 0.98 }}
+                                onClick={handleLogout}
+                                className="flex-1 px-6 py-3 rounded-xl bg-gradient-to-r from-red-500 to-pink-500 hover:from-red-600 hover:to-pink-600 text-white font-semibold shadow-lg transition"
+                            >
+                                Logout
+                            </motion.button>
+                        </div>
+                    </motion.div>
                 </motion.div>
             )}
         </>

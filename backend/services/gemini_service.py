@@ -5,12 +5,14 @@ import google.generativeai as genai
 from fastapi import HTTPException
 import random
 
-# Load and configure Gemini API key at import time
-GEMINI_API_KEY = os.getenv("GEMINI_API_KEY", "")
-if not GEMINI_API_KEY:
-    raise EnvironmentError("GEMINI_API_KEY not set in environment (.env)")
+# Load separate Gemini API keys for different functionalities
+GEMINI_API_KEY_CHAT = os.getenv("GEMINI_API_KEY_CHAT", "")
+GEMINI_API_KEY_VISION = os.getenv("GEMINI_API_KEY_VISION", "")
 
-genai.configure(api_key=GEMINI_API_KEY)
+if not GEMINI_API_KEY_CHAT:
+    raise EnvironmentError("GEMINI_API_KEY_CHAT not set in environment (.env)")
+if not GEMINI_API_KEY_VISION:
+    raise EnvironmentError("GEMINI_API_KEY_VISION not set in environment (.env)")
 
 
 
@@ -151,6 +153,8 @@ def ask_gemini(
     )
 
     try:
+        # Configure with CHAT API key
+        genai.configure(api_key=GEMINI_API_KEY_CHAT)
         model = genai.GenerativeModel(model_name)
 
         resp = model.generate_content(
@@ -181,6 +185,8 @@ def is_dog_image(image_bytes: bytes) -> bool:
     """
 
     try:
+        # Configure with VISION API key
+        genai.configure(api_key=GEMINI_API_KEY_VISION)
         model = genai.GenerativeModel("gemini-2.5-flash")
 
         prompt = """

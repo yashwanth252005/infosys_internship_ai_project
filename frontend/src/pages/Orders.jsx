@@ -122,18 +122,10 @@ export default function Orders() {
                     x: [0, 50, 0],
                     opacity: [0.3, 0.5, 0.3]
                 }}
-                transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
+                transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
                 className="absolute top-20 right-20 w-96 h-96 bg-gradient-to-br from-purple-300/40 to-pink-300/40 rounded-full blur-3xl -z-5"
             />
-            <motion.div
-                animate={{
-                    scale: [1, 1.3, 1],
-                    x: [0, -50, 0],
-                    opacity: [0.3, 0.5, 0.3]
-                }}
-                transition={{ duration: 25, repeat: Infinity, ease: "linear" }}
-                className="absolute bottom-40 left-20 w-96 h-96 bg-gradient-to-br from-indigo-300/40 to-blue-300/40 rounded-full blur-3xl -z-5"
-            />
+
 
             <div className="max-w-6xl mx-auto px-6 py-12 relative">
                 {/* Header Section */}
@@ -141,7 +133,7 @@ export default function Orders() {
                     initial={{ opacity: 0, y: -30 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.6 }}
-                    className="mb-12"
+                    className="mb-12 text-center"
                 >
                     <motion.div
                         initial={{ scale: 0 }}
@@ -152,11 +144,11 @@ export default function Orders() {
                         <span className="text-6xl">📦</span>
                     </motion.div>
 
-                    <h1 className="text-4xl md:text-5xl font-extrabold mb-3">
+                    <span><h1 className="text-4xl md:text-5xl font-extrabold mb-3">
                         <span className="bg-gradient-to-r from-primary via-purple-600 to-pink-600 bg-clip-text text-transparent">
                             My Orders
                         </span>
-                    </h1>
+                    </h1></span>
 
                     <p className="text-gray-600 text-lg">
                         Track and manage all your orders in one place 🐾
@@ -219,10 +211,10 @@ export default function Orders() {
                                         animate={{ opacity: 1, x: 0 }}
                                         transition={{ delay: orderIndex * 0.1 + idx * 0.05 }}
                                         whileHover={{ scale: 1.02, x: 5 }}
-                                        className="flex items-center gap-4 p-4 bg-gradient-to-r from-gray-50 to-white rounded-2xl border border-gray-100 hover:border-primary/30 transition-all"
+                                        className="flex items-center gap-4 p-4 bg-gradient-to-r from-gray-50 to-white rounded-2xl border border-primary/30 hover:border-primary/30 transition-all"
                                     >
                                         {/* Product Image */}
-                                        {/* <motion.div
+                                        <motion.div
                                             whileHover={{ scale: 1.1, rotate: 5 }}
                                             className="flex-shrink-0 w-20 h-20 bg-white rounded-xl flex items-center justify-center shadow-md overflow-hidden"
                                         >
@@ -231,7 +223,7 @@ export default function Orders() {
                                                 alt={item.name}
                                                 className="w-16 h-16 object-contain"
                                             />
-                                        </motion.div> */}
+                                        </motion.div>
 
                                         {/* Product Details */}
                                         <div className="flex-1 min-w-0">

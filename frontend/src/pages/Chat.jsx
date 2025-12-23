@@ -5,6 +5,7 @@ import { useAuth } from "../contexts/AuthContext";
 import ChatHistorySidebar from "../components/ChatHistorySidebar";
 import { motion, AnimatePresence } from "framer-motion";
 import ReactMarkdown from "react-markdown";
+import chatbotBackground from "../assets/chatbot_background.png";
 
 export default function Chat() {
     const [showHistory, setShowHistory] = useState(false);
@@ -373,7 +374,14 @@ export default function Chat() {
                     initial={{ opacity: 0, scale: 0.98 }}
                     animate={{ opacity: 1, scale: 1 }}
                     transition={{ delay: 0.2 }}
-                    className="flex-1 bg-white/60 backdrop-blur-xl shadow-2xl rounded-3xl p-6 overflow-y-auto space-y-5 border border-white/20"
+                    className="flex-1 bg-white/60 backdrop-blur-xl shadow-2xl rounded-3xl p-6 overflow-y-auto space-y-5 border border-white/20 relative"
+                    style={{
+                        backgroundImage: `url(${chatbotBackground})`,
+                        backgroundSize: 'cover',
+                        backgroundPosition: 'center',
+                        backgroundRepeat: 'no-repeat',
+                        backgroundBlendMode: 'overlay'
+                    }}
                 >
                     {loadingHistory ? (
                         <motion.div
@@ -404,7 +412,7 @@ export default function Chat() {
                                     <div
                                         className={`max-w-[75%] px-6 py-4 rounded-3xl text-base shadow-lg ${msg.role === "user"
                                             ? "bg-gradient-to-r from-primary to-indigo-700 text-white rounded-br-md"
-                                            : "bg-white/90 backdrop-blur-sm text-gray-800 rounded-bl-md border border-gray-100"
+                                            : "bg-gradient-to-br from-white/95 via-blue-50/90 to-purple-50/90 backdrop-blur-md text-gray-800 rounded-bl-md border border-purple-200/50 shadow-xl"
                                             }`}
                                     >
                                         {msg.image && (

@@ -135,10 +135,30 @@ export default function Predict() {
             {/* Gradient Background */}
             <div className="absolute inset-0 bg-gradient-to-br from-indigo-50 via-purple-50 to-pink-50 -z-10" />
 
+            {/* Animated Background Blobs */}
+            <motion.div
+                animate={{
+                    scale: [1, 1.2, 1],
+                    x: [0, 50, 0],
+                    opacity: [0.3, 0.5, 0.3]
+                }}
+                transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
+                className="absolute top-20 right-20 w-96 h-96 bg-gradient-to-br from-purple-300/40 to-pink-300/40 rounded-full blur-3xl -z-5"
+            />
+
             <div className="max-w-7xl mx-auto px-4 py-10">
-                <h1 className="text-4xl font-extrabold mb-8">
-                    AI Dog Breed Analyzer 🧬
-                </h1>
+                <motion.div
+                    initial={{ opacity: 0, y: -20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.5 }}
+                    className="text-center mb-8"
+                >
+                    <h1 className="text-4xl font-extrabold mb-8">
+                        <span className="bg-gradient-to-r from-primary via-purple-600 to-pink-600 bg-clip-text text-transparent">
+                            AI Dog Breed Analyzer 🧬
+                        </span>
+                    </h1>
+                </motion.div>
 
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
                     {/* ================= LEFT: Upload ================= */}

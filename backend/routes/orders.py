@@ -12,6 +12,7 @@ class OrderItem(BaseModel):
     name: str
     price: float
     quantity: int
+    image: str
 
 class OrderCreate(BaseModel):
     user_id: str   # supabase user id

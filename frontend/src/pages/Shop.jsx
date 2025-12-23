@@ -2,12 +2,22 @@
 import products from "../data/products";
 import { useCart } from "../contexts/CartContext";
 import { motion } from "framer-motion";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import Loader from "../components/Loader";
 
 export default function Shop() {
 
     const { addToCart } = useCart();
     const [addedItems, setAddedItems] = useState({});
+    const [loading, setLoading] = useState(true);
+
+    // Simulate loading products
+    useEffect(() => {
+        const timer = setTimeout(() => {
+            setLoading(false);
+        }, 800);
+        return () => clearTimeout(timer);
+    }, []);
 
     const handleAddToCart = (product) => {
         addToCart(product);
@@ -41,6 +51,10 @@ export default function Shop() {
         }
     };
 
+    if (loading) {
+        return <Loader text="Loading products..." />;
+    }
+
     return (
         <div className="relative overflow-hidden min-h-screen">
             {/* Animated Gradient Background */}
@@ -53,7 +67,7 @@ export default function Shop() {
                     x: [0, 50, 0],
                     opacity: [0.3, 0.5, 0.3]
                 }}
-                transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
+                transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
                 className="absolute top-20 right-20 w-96 h-96 bg-gradient-to-br from-purple-300/40 to-pink-300/40 rounded-full blur-3xl -z-5"
             />
             <motion.div
@@ -74,6 +88,7 @@ export default function Shop() {
                     transition={{ duration: 0.6 }}
                     className="text-center mb-16"
                 >
+
                     <motion.div
                         initial={{ scale: 0 }}
                         animate={{ scale: 1 }}
