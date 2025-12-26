@@ -1,9 +1,10 @@
 // frontend/src/pages/Cart.jsx
+import { useState } from "react";
 import { useCart } from "../contexts/CartContext";
 import { useAuth } from "../contexts/AuthContext";
 import api from "../api/api";
 import { useNavigate } from "react-router-dom";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 
 export default function Cart() {
 
@@ -11,13 +12,14 @@ export default function Cart() {
     const { user } = useAuth();
 
     const { cartItems, updateQuantity, removeFromCart, clearCart } = useCart();
+    const [showSuccessModal, setShowSuccessModal] = useState(false);
 
     const total = cartItems.reduce(
         (sum, item) => sum + item.price * item.quantity,
         0
     );
 
-    if (cartItems.length === 0) {
+    if (cartItems.length === 0 && !showSuccessModal) {
         return (
             <div className="relative overflow-hidden min-h-[80vh] flex items-center justify-center">
                 {/* Gradient Background */}
@@ -84,17 +86,106 @@ export default function Cart() {
                 total,
             });
 
-            alert("Order placed successfully! 🐶🛒");
-            clearCart();
+            setShowSuccessModal(true);
         } catch (err) {
             alert("Failed to place order. Please try again.");
         }
+    };
+
+    const handleCloseModal = () => {
+        setShowSuccessModal(false);
+        clearCart();
+        navigate("/shop");
     };
 
     return (
         <div className="relative overflow-hidden min-h-screen">
             {/* Gradient Background */}
             <div className="absolute inset-0 bg-gradient-to-br from-indigo-50 via-purple-50 to-pink-50 -z-10" />
+
+            {/* Success Modal */}
+            <AnimatePresence>
+                {showSuccessModal && (
+                    <motion.div
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        exit={{ opacity: 0 }}
+                        className="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center p-4"
+                        onClick={handleCloseModal}
+                    >
+                        <motion.div
+                            initial={{ scale: 0.5, y: 100, opacity: 0 }}
+                            animate={{ scale: 1, y: 0, opacity: 1 }}
+                            exit={{ scale: 0.5, y: 100, opacity: 0 }}
+                            transition={{ type: "spring", duration: 0.5 }}
+                            className="relative max-w-md w-full"
+                            onClick={(e) => e.stopPropagation()}
+                        >
+                            {/* Glow effect */}
+                            <div className="absolute inset-0 bg-gradient-to-r from-green-400 via-emerald-500 to-teal-500 rounded-3xl opacity-75 blur-2xl animate-pulse" />
+
+                            {/* Modal content */}
+                            <div className="relative bg-white rounded-3xl shadow-2xl p-8 text-center">
+                                {/* Success animation */}
+                                <motion.div
+                                    initial={{ scale: 0, rotate: -180 }}
+                                    animate={{ scale: 1, rotate: 0 }}
+                                    transition={{ delay: 0.2, type: "spring", stiffness: 200 }}
+                                    className="text-8xl mb-6"
+                                >
+                                    ✅
+                                </motion.div>
+
+                                <motion.h2
+                                    initial={{ opacity: 0, y: 20 }}
+                                    animate={{ opacity: 1, y: 0 }}
+                                    transition={{ delay: 0.3 }}
+                                    className="text-3xl font-extrabold mb-3 bg-gradient-to-r from-green-600 to-emerald-600 bg-clip-text text-transparent"
+                                >
+                                    Order Placed Successfully!
+                                </motion.h2>
+
+                                <motion.p
+                                    initial={{ opacity: 0 }}
+                                    animate={{ opacity: 1 }}
+                                    transition={{ delay: 0.4 }}
+                                    className="text-gray-600 text-lg mb-8"
+                                >
+                                    Your order has been confirmed. Thank you for shopping! 🐶🛒
+                                </motion.p>
+
+                                <motion.div
+                                    initial={{ opacity: 0, y: 20 }}
+                                    animate={{ opacity: 1, y: 0 }}
+                                    transition={{ delay: 0.5 }}
+                                    className="flex gap-3"
+                                >
+                                    <motion.button
+                                        whileHover={{ scale: 1.05 }}
+                                        whileTap={{ scale: 0.95 }}
+                                        onClick={handleCloseModal}
+                                        className="flex-1 py-3 bg-gradient-to-r from-green-500 to-emerald-600 text-white font-bold rounded-xl shadow-lg hover:shadow-xl transition"
+                                    >
+                                        Continue Shopping
+                                    </motion.button>
+
+                                    <motion.button
+                                        whileHover={{ scale: 1.05 }}
+                                        whileTap={{ scale: 0.95 }}
+                                        onClick={() => {
+                                            setShowSuccessModal(false);
+                                            clearCart();
+                                        }}
+                                        className="flex-1 py-3 bg-gray-100 text-gray-700 font-semibold rounded-xl shadow-md hover:shadow-lg transition"
+                                    >
+                                        Close
+                                    </motion.button>
+                                </motion.div>
+                            </div>
+                        </motion.div>
+                    </motion.div>
+                )}
+            </AnimatePresence>
 
             <div className="max-w-6xl mx-auto px-4 py-10">
                 {/* Header */}
