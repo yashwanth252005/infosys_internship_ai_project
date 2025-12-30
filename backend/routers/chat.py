@@ -2,9 +2,9 @@
 from fastapi import APIRouter, HTTPException, UploadFile, File, Form
 import os
 
-from backend.services.gemini_service import ask_gemini, is_dog_image
-from backend.utils.json_loader import JSONStore
-from backend.models.dog_model import DogModel
+from services.gemini_service import ask_gemini, is_dog_image
+from utils.json_loader import JSONStore
+from models.dog_model import DogModel
 
 router = APIRouter()
 

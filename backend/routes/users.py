@@ -2,7 +2,7 @@
 from fastapi import APIRouter, HTTPException
 from pydantic import BaseModel
 from datetime import datetime
-from backend.utils.mongo import users
+from utils.mongo import users
 
 router = APIRouter(prefix="/api/users", tags=["Users"])
 

@@ -2,8 +2,8 @@
 from fastapi import APIRouter, File, UploadFile, HTTPException
 import os
 
-from backend.models.dog_model import DogModel
-from backend.services.gemini_service import is_dog_image   # ✅ NEW IMPORT
+from models.dog_model import DogModel
+from services.gemini_service import is_dog_image   # ✅ NEW IMPORT
 
 print("MODEL PATH FROM ENV:", os.getenv("MODEL_PATH"))
 

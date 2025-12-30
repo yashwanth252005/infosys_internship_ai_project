@@ -1,6 +1,6 @@
 from fastapi import APIRouter, HTTPException
 import os
-from backend.utils.json_loader import JSONStore
+from utils.json_loader import JSONStore
 
 router = APIRouter()
 

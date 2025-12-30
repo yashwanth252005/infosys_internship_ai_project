@@ -3,7 +3,7 @@ from fastapi import APIRouter, HTTPException
 from pydantic import BaseModel
 from datetime import datetime
 from bson import ObjectId
-from backend.utils.mongo import chat_sessions, chat_history
+from utils.mongo import chat_sessions, chat_history
 
 router = APIRouter(prefix="/api/chat-sessions", tags=["Chat Sessions"])
 

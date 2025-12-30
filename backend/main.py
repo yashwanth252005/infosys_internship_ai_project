@@ -13,14 +13,14 @@ print("MODEL PATH FROM ENV AFTER LOADING:", os.getenv("MODEL_PATH"))
 
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from backend.routers import data_api, predict, chat
-from backend.routes.users import router as users_router
-from backend.routes.orders import router as orders_router
-from backend.routes.chat_history import router as chat_history_router
-from backend.routes.chat_sessions import router as chat_sessions_router  # ← NEW
-from backend.utils.mongo import ensure_indexes
+from routers import data_api, predict, chat
+from routes.users import router as users_router
+from routes.orders import router as orders_router
+from routes.chat_history import router as chat_history_router
+from routes.chat_sessions import router as chat_sessions_router  # ← NEW
+from utils.mongo import ensure_indexes
 
-# from backend.routers import data
+# from routers import data
 app = FastAPI(title="DogBreedChat Backend")
 
 app.add_middleware(
