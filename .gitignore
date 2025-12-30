@@ -21,7 +21,9 @@ __pycache__/
 *.tar
 *.tar.gz
 
+# ignore large/unused models
 models/*.pth
+!models/dog_breed_model_1.pth
 models/*.pt
 
 # logs
