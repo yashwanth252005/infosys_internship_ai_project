@@ -21,7 +21,7 @@ albumentations[pytorch]
 requests
 
 # Gemini (Google Generative AI)
-google-generativeai
+google-generativeai==0.8.5
 
 # Database
 pymongo
