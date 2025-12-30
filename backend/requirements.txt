@@ -1,0 +1,31 @@
+# Core backend
+fastapi
+uvicorn
+
+# Environment & config
+python-dotenv
+
+# ML & DL
+torch
+torchvision
+timm
+numpy
+pillow
+opencv-python-headless
+
+# Image preprocessing
+albumentations
+albumentations[pytorch]
+
+# HTTP & utilities
+requests
+
+# Gemini (Google Generative AI)
+google-generativeai
+
+# Database
+pymongo
+motor
+
+# Multipart (file upload)
+python-multipart
