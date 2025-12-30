@@ -67,7 +67,7 @@ export default function Login() {
                             transition={{ delay: 0.2 }}
                         >
                             <h2 className="text-4xl font-extrabold mb-3 drop-shadow-lg">
-                                DogAI 🐾
+                                PawXpert 🐾
                             </h2>
                             <p className="text-lg text-white/95 font-medium">
                                 Understand your dog like never before.
@@ -117,7 +117,7 @@ export default function Login() {
                             <p className="text-xs text-white/70 mt-2">— Happy Dog Parent</p>
                         </motion.div>
                         <p className="text-sm text-white/70">
-                            © 2025 DogAI. All rights reserved.
+                            © 2025 PawXpert. All rights reserved.
                         </p>
                     </div>
                 </div>

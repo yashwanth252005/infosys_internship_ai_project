@@ -73,10 +73,10 @@ export default function Register() {
                             transition={{ delay: 0.2 }}
                         >
                             <h2 className="text-4xl font-extrabold mb-3 drop-shadow-lg">
-                                DogAI 🐾
+                                PawXpert 🐾
                             </h2>
                             <p className="text-lg text-white/95 font-medium">
-                                Join DogAI and start caring smarter.
+                                Join PawXpert and start caring smarter.
                             </p>
                         </motion.div>
 
@@ -123,7 +123,7 @@ export default function Register() {
                     </div>
 
                     <p className="relative z-10 text-sm text-white/70">
-                        © 2025 DogAI. All rights reserved.
+                        © 2025 PawXpert. All rights reserved.
                     </p>
                 </div>
 

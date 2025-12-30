@@ -38,7 +38,7 @@ export default function Navbar() {
                         onClick={() => setMobileOpen(false)}
                         className="text-2xl font-extrabold text-white flex items-center gap-2"
                     >
-                        🐶 DogAI
+                        🐶 PawXpert
                     </NavLink>
 
                     {/* Desktop Links */}

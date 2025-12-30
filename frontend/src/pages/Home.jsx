@@ -98,7 +98,7 @@ export default function Home() {
                                 onClick={() => navigate("/chat")}
                                 className="px-7 py-3 rounded-2xl bg-secondary text-white font-semibold shadow-lg hover:shadow-xl transition"
                             >
-                                💬 Chat with DogAI
+                                💬 Chat with PawXpert
                             </motion.button>
 
                             <motion.button
