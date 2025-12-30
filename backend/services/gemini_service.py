@@ -121,7 +121,7 @@ def ask_gemini(
     breed_info: dict = None,
     diet_info: dict = None,
     sample_questions: list | None = None,
-    model_name: str = "gemini-2.5-flash",
+    model_name: str = "gemini-1.5-flash",
     max_output_tokens: int = 500
 ) -> str:
 
@@ -180,14 +180,14 @@ def ask_gemini(
 # -----------------------------------------------------------
 def is_dog_image(image_bytes: bytes) -> bool:
     """
-    TRUE vision detection using gemini-2.5-flash (free-tier compatible)
+    TRUE vision detection using gemini-1.5-flash (free-tier compatible)
     Sends the image as a PART instead of embedding base64 in text.
     """
 
     try:
         # Configure with VISION API key
         genai.configure(api_key=GEMINI_API_KEY_VISION)
-        model = genai.GenerativeModel("gemini-2.5-flash")
+        model = genai.GenerativeModel("gemini-1.5-flash")
 
         prompt = """
 You are an animal detection classifier.
